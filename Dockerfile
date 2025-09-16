@@ -15,8 +15,5 @@ COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /app/
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
-# Install 3X-UI
-RUN curl -fsSL https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh | bash
-
 # Run on container startup.
 CMD ["/app/start.sh"]
