@@ -1,6 +1,7 @@
 services:
   - type: worker
     name: render-subnet-router
+   # dockerfilePath: tailscaled/Dockerfile
     env: docker
     autoDeploy: false
     envVars:
