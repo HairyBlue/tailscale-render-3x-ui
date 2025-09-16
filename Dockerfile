@@ -1,26 +1,19 @@
-FROM debian:latest
+FROM alpine:latest as builder
 WORKDIR /app
 COPY . ./
+# This is where one could build the application code as well.
 
-ARG TAILSCALE_VERSION
-ENV TAILSCALE_VERSION=$TAILSCALE_VERSION
+# https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
+FROM alpine:latest
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-RUN apt-get -qq update \
-  && apt-get -qq install --upgrade -y --no-install-recommends \
-    apt-transport-https \
-    ca-certificates \
-    netcat-openbsd \
-    wget \
-    dnsutils \
-  > /dev/null \
-  && apt-get -qq clean \
-  && rm -rf \
-    /var/lib/apt/lists/* \
-    /tmp/* \
-    /var/tmp/* \
-  && :
+# Copy binary to production image.
+COPY --from=builder /app/start.sh /app/start.sh
 
-RUN echo "+search +short" > /root/.digrc
+# Copy Tailscale binaries from the tailscale image on Docker Hub.
+COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /app/tailscaled
+COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /app/tailscale
+RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
 # Run on container startup.
 CMD ["/app/start.sh"]
