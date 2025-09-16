@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM debian:latest
 WORKDIR /app
 COPY . ./
 # This is where one could build the application code as well.
@@ -14,6 +14,10 @@ COPY --from=builder /app/start.sh /app/start.sh
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /app/tailscaled
 COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
+
+
+# Expose ports for 3X-UI or your app if needed
+EXPOSE 2053
 
 # Run on container startup.
 CMD ["/app/start.sh"]

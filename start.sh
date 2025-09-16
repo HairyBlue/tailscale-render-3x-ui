@@ -7,12 +7,9 @@
 sleep 10
 
 # Install 3X-UI at runtime (will only run if not installed)
-/usr/bin/test -f /usr/local/bin/3x-ui || curl -fsSL https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh | bash -s -- -Y
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
 
 # Start 3X-UI in background
-/usr/local/bin/3x-ui &
-
-# Start 3X-UI in background (adjust path if needed)
 /usr/local/bin/3x-ui &
 
 /app/my-app
