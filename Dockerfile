@@ -13,10 +13,10 @@ RUN apt-get -qq update \
     wget \
     dnsutils \
     nodejs \
-    npm \ 
+    npm \
     bash \
     curl \
-    iptables \ 
+    iptables \
     ip6tables \
   > /dev/null \
   && apt-get -qq clean \
