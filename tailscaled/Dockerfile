@@ -23,6 +23,6 @@ RUN echo "+search +short" > /root/.digrc
 COPY run-tailscale.sh /render/
 
 COPY install-tailscale.sh /tmp
-RUN /tmp/install-tailscale.sh && rm -r /tmp/*
-
-CMD ./run-tailscale.sh
+RUN chmod +x /tmp/install-tailscale.sh && rm -r /tmp/*
+RUN chmod +x /render/run-tailscale.sh
+CMD ["./run-tailscale.sh"]
