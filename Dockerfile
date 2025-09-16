@@ -12,12 +12,6 @@ RUN apt-get -qq update \
     netcat-openbsd \
     wget \
     dnsutils \
-    nodejs \
-    npm \
-    bash \
-    curl \
-    iptables \
-    ip6tables \
   > /dev/null \
   && apt-get -qq clean \
   && rm -rf \
